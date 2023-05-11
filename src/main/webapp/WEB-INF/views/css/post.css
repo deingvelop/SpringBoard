@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+/* 전체 페이지 스타일 */
+body {
+  background-color: #ffffff; /* 백그라운드 컬러 */
+  color: #000000; /* 글자색 */
+  font-family: sans-serif; /* 폰트 패밀리 */
+}
+
+/* 네비게이션 바 */
+nav {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 10px;
+}
+
+/* 제목 스타일 */
+h1, h2, h3 {
+  color: #000000;
+}
+
+/* 입력 폼 스타일 */
+input[type="text"], textarea {
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #000000;
+  padding: 5px;
+}
+
+/* 버튼 스타일 */
+button {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* 링크 스타일 */
+a {
+  color: #000000;
+  text-decoration: none;
+  border-bottom: 1px solid #000000;
+}
+
+a:hover {
+  color: #000000;
+  border-bottom: none;
+}
+
+a{
+  text-decoration:none; color:inherit; cursor: pointer;
+}
+ .right_area .icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100vw * (45 / 1920));
+    height: calc(100vw * (45 / 1920));
+
+    border-radius: 50%;
+    border: solid 2px #eaeaea;
+    background-color: #fff;
+}
+
+.icon.heart img{
+    width: calc(100vw * (24 / 1920));
+    height: calc(100vw * (24 / 1920));
+}
+
+.icon.heart.fas{
+  color:red
+}
+.heart{
+    transform-origin: center;
+}
+.heart.active img{
+    animation: animateHeart .3s linear forwards;
+}
+
+@keyframes animateHeart{
+    0%{transform:scale(.2);}
+    40%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+  }

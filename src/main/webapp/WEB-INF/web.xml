@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/*-context.xml</param-value>
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<!-- Listener : 이벤트를 감지하는 아이 -->
+	<!-- 			ContextLoaderListener :  -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+      <!-- Log4j 설정 -->
+      <context-param>
+          <param-name>log4jConfiguration</param-name>
+          <param-value>classpath:/log4j2.xml</param-value>
+      </context-param>
+        
+      <listener>
+          <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener
+          </listener-class>
+      </listener>
+
+	<!-- Processes application requests -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>	<!-- 이 밑에 설정 가지고, 이 위의 클래스 가지고 appServlet 만들어! (요청 들어오면!) -->
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>	<!-- 이름/경로 변경 가능! -->
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- filter : 설정으로 사용. 특히 자주 사용하는 필터는 Spring에서 이미 제공함 -> 설정만 하면 금방 됨 -->
+	<!--      	    직접 만들 수도 있음 (user-Defined filter) 그러나 자주 사용되지는 않음 -->
+	<!--      	  cf) Interceptor = 필터와 비슷한 친구 -->
+	<filter>	<!-- request가 오면, dispatcher servlet 가기 전에 필터를 거침! -->
+	    <filter-name>encodingFilter</filter-name>
+	    <filter-class>
+	        org.springframework.web.filter.CharacterEncodingFilter
+	    </filter-class>
+	    <init-param>
+	        <param-name>encoding</param-name>
+	        <param-value>UTF-8</param-value>
+	    </init-param>
+	</filter>
+	
+	<filter-mapping>
+	    <filter-name>encodingFilter</filter-name>
+	    <url-pattern>/*</url-pattern>		<!-- 모든 리퀘스트에 대해서! -->
+	</filter-mapping>
+
+</web-app>
