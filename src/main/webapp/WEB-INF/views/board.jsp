@@ -9,7 +9,7 @@
 <head>
 
 <meta charset="utf-8">
-<title>MZ BOARD | 게시판</title>
+<title>게시판</title>
 
 <!-- Bootstrap을 사용하려고 해요! library가 있어야 해요! -->
 <link

@@ -3,14 +3,14 @@
 
 <mapper namespace="memberMapper">
 	
-	<insert id="insertMember" parameterType="MemberVO">
+	<insert id="insertMember" parameterType="MemberRequestVO">
 		<![CDATA[
 		INSERT INTO "MEMBER" (id, username, "PASSWORD", nickname)
-		VALUES (MEMBER_ID_SEQ.NEXTVAL, #{username}, #{password}, #{nickname});
+		VALUES (MEMBER_ID_SEQ.NEXTVAL, #{username}, #{password}, #{nickname})
 		]]>
 	</insert>
 	
-	<select id="findByUsernameAndPassword" parameterType="LoginRequestVO" resultType="MemberVO">
+	<select id="findByUsernameAndPassword" parameterType="MemberRequestVO" resultType="MemberVO">
 	    <![CDATA[
 	    SELECT * FROM MEMBER
 	    WHERE username = #{username} AND "PASSWORD" = #{password}

@@ -1,11 +1,10 @@
 package com.example.springboard.member.vo;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@AllArgsConstructor
 @Data
-public class LoginRequestVO {
+public class MemberRequestVO {
 	private String username;
 	private String password;
+	private String nickname;
 }

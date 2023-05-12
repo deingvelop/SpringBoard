@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.springboard.member.service.MemberService;
-import com.example.springboard.member.vo.LoginRequestVO;
+import com.example.springboard.member.vo.MemberRequestVO;
 import com.example.springboard.member.vo.MemberVO;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("login")
-	public String login(LoginRequestVO requestVO, HttpSession session) {
+	public String login(MemberRequestVO requestVO, HttpSession session) {
 		MemberVO loginMemgber = memberService.login(requestVO);
 		session.setAttribute("loginMember", loginMemgber);
 		return "redirect:/board";
@@ -37,4 +37,14 @@ public class MemberController {
 	    return "redirect:/login";
 	}
 	
+	@GetMapping("join")
+	public String goToJoinPage() {
+		return "join";
+	}
+	
+	@PostMapping("join")
+	public String join(MemberRequestVO requestVO) {
+		MemberRequestVO newMember = memberService.join(requestVO);
+		return "redirect:/login";
+	}
 }

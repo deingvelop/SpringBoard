@@ -26,13 +26,13 @@
 	    </c:if>
 	
 	    <div class="login-wrapper">
-		    <h2 class="login-heading">Login</h2>
-		    <form method="post" action="login" id="login-form">
-		        <input type="text" name="username" placeholder="아이디">
-		        <input type="password" name="password" placeholder="비밀번호">
-		        <input type="submit" value="로그인">
-		    </form>   
-		    <p><a href="join" style="color: green;" onclick="alert('회원가입 페이지로 이동합니다.');">아직 계정이 없으십니까? 회원가입하기</a></p>
-		</div>
+	        <h2 class="login-heading">Join</h2>
+	        <form method="post" action="join" id="login-form">
+	            <input type="text" name="username" placeholder="아이디">
+	            <input type="password" name="password" placeholder="비밀번호">
+	            <input type="text" name="nickname" placeholder="닉네임">
+	            <input type="submit" value="회원가입" onclick="alert('회원가입이 완료되었습니다.');">
+	        </form>
+	    </div>
 	</body>
 </html>

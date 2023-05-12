@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.example.springboard.member.vo.LoginRequestVO;
+import com.example.springboard.member.vo.MemberRequestVO;
 import com.example.springboard.member.vo.MemberVO;
 
 import lombok.extern.log4j.Log4j2;
@@ -19,7 +19,7 @@ public class MemberDAOImpl implements MemberDAO {
 	private SqlSession session;
 
 	@Override
-	public Optional<MemberVO> login(LoginRequestVO requestVO) {
+	public Optional<MemberVO> login(MemberRequestVO requestVO) {
 		log.info("request=" + requestVO);
 		 
 		String statement = "memberMapper.findByUsernameAndPassword";
@@ -29,6 +29,16 @@ public class MemberDAOImpl implements MemberDAO {
 		log.info("result=" + loginMember);
 
 	    return loginMember;
+	}
+
+	@Override
+	public int join(MemberRequestVO requestVO) {
+		log.info("request=" + requestVO);
+		 
+		String statement = "memberMapper.insertMember";
+		int result = session.insert(statement, requestVO);
+
+	    return result;
 	}
 
 }
