@@ -25,6 +25,7 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath:mappers/Member.xml</value>
+				<value>classpath:mappers/Post.xml</value>
 				<!-- <value>classpath:mappers/Book.xml</value>
 				<value>classpath:mappers/Point.xml</value> -->
 			</list>

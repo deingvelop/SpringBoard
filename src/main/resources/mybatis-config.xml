@@ -18,6 +18,7 @@
               오직 XML 설정에서만 사용되며, 타이핑을 줄이기 위해 사용 -->
 	<typeAliases>
         <package name="com.example.springboard.member.vo" />
+        <package name="com.example.springboard.post.vo" />
     </typeAliases>
 	
 </configuration>

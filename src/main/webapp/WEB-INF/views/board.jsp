@@ -141,7 +141,7 @@
 					<div class="btn-toolbar mb-2 mb-md-0"></div>
 				</div>
 				<div>
-					<form method="GET" action="post/new">
+					<form method="GET" action="/springboard/post/new">
 						<input class="btn btn-dark btn-sm" type="submit" value="게시글 작성" style="float:right;">
 					</form>
 				</div>
@@ -161,9 +161,9 @@
 							<c:forEach var="post" items="${posts}">
 								<tr>
 									<td>${post.id}</td>
-									<td><a href="/mzboard/post?postId=${post.id}" style="text-decoration: none; color: inherit;">${post.title}</a></td>
-									<td>${post.author}</td>
-									<td>${post.date}</td>
+									<td><a href="/springboard/post/${post.id}" style="text-decoration: none; color: inherit;">${post.title}</a></td>
+									<td>${post.memberNickname}</td>
+									<td>${post.postDate}</td>
 									<td>${post.likeCnt}</td>
 								</tr>
 							</c:forEach>

@@ -1,17 +1,18 @@
 package com.example.springboard.post.vo;
 
-import java.time.LocalDate;
-
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class PostVO {
-	private int id;
+@Setter
+@Getter
+public class PostRequestVO {
 	private String title;
 	private String content;
 	private int memberId;
 	private String memberNickname;
-	private int likeCnt;
-	private int dislikeCnt;
-	private LocalDate postDate;
+	public void setMemberId(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 }
