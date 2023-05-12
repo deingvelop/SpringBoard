@@ -19,23 +19,20 @@
 	</bean>
 
 	<!-- sqlSessionFactory Bean을 등록해야 해요! -->
-	<bean id="sqlSessionFactory"
-		class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" /> <!-- 값이 아니라 객체를 주입받는 것이기 때문에 value가 아니라 ref사용 -->
-		<property name="configLocation"
-			value="classpath:mybatis-config.xml" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<property name="mapperLocations">
 			<list>
-				<!-- <value>classpath:mappers/Book.xml</value>
 				<value>classpath:mappers/Member.xml</value>
+				<!-- <value>classpath:mappers/Book.xml</value>
 				<value>classpath:mappers/Point.xml</value> -->
 			</list>
 		</property>
 	</bean>
 
 	<!-- sqlSession을 Bean으로 등록해요! -->
-	<bean id="sqlSession"
-		class="org.mybatis.spring.SqlSessionTemplate">
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
 		<!-- 위쪽에 있는 factory를 생성자로 가져와서 bean객체 만들기 -->
 	</bean>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="memberMapper">
+	
+	<insert id="insertMember" parameterType="MemberVO">
+		<![CDATA[
+		INSERT INTO "MEMBER" (id, username, "PASSWORD", nickname)
+		VALUES (MEMBER_ID_SEQ.NEXTVAL, #{username}, #{password}, #{nickname});
+		]]>
+	</insert>
+	
+	<select id="findByUsernameAndPassword" parameterType="LoginRequestVO" resultType="MemberVO">
+	    <![CDATA[
+	    SELECT * FROM MEMBER
+	    WHERE username = #{username} AND "PASSWORD" = #{password}
+	   	]]>
+	</select>
+	
+</mapper>

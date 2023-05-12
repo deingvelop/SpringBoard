@@ -11,6 +11,12 @@
 		<link rel="stylesheet" href="./css/login.css">
 	</head>
 	<body>
+		<c:if test="${showAlert}">
+	        <script>
+	            alert("${errorMessage} : ${errorMessage}");
+	        </script>
+	    </c:if>
+	
 	    <div class="login-wrapper">
 	        <h2>Login</h2>
 	        <form method="post" action="login" id="login-form">

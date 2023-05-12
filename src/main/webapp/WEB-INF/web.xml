@@ -62,5 +62,9 @@
 	    <filter-name>encodingFilter</filter-name>
 	    <url-pattern>/*</url-pattern>		<!-- 모든 리퀘스트에 대해서! -->
 	</filter-mapping>
+	
+	 <error-page>
+        <location>/WEB-INF/views/error.jsp</location>
+    </error-page>
 
 </web-app>

@@ -17,10 +17,7 @@
    <!-- 타입 별칭은 자바 타입에 대한 좀더 짧은 이름을 설정하기 위해 사용 
               오직 XML 설정에서만 사용되며, 타이핑을 줄이기 위해 사용 -->
 	<typeAliases>
-      <!-- <typeAlias alias="Book" type="com.spring.springweb.sample06.vo.BookVO" />      
-      <typeAlias alias="SearchRequest" type="com.spring.springweb.sample06.vo.SearchBookRequestVO" />      
-      <typeAlias alias="Member" type="com.spring.springweb.sample07.member.vo.MemberVO" />      
-      <typeAlias alias="Point" type="com.spring.springweb.sample07.point.vo.PointVO" />    -->   
-   </typeAliases>
+        <package name="com.example.springboard.member.vo" />
+    </typeAliases>
 	
 </configuration>
