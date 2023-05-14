@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -135,4 +136,11 @@ public class PostController {
 		return "redirect:/post/" + postId;
 	}
 	
+	@DeleteMapping(value = "post/{postId}")
+	public String deletePost(@PathVariable("postId") int postId, HttpSession session) {
+		
+		postService.deletePost(postId);
+				
+		return "redirect:/board";
+	}
 }

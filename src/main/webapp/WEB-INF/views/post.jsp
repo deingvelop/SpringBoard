@@ -37,7 +37,7 @@
 		          url: '/springboard/post/' + postId,
 		          success: function(result) {
 		            alert('게시글이 삭제되었습니다.');
-		            window.location.href='board';
+		            window.location.href='/springboard/board';
 		          },
 		          error: function(err) {
 		            alert('게시글 삭제에 실패하였습니다.');

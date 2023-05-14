@@ -13,5 +13,7 @@ public interface PostService {
 	PostVO showPost(int postId);
 
 	PostVO updatePost(PostVO postVO);
+
+	void deletePost(int postId);
 	
 }

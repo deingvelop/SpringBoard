@@ -61,4 +61,14 @@ public class PostDAOImpl implements PostDAO {
 	    return result;
 	}
 
+	@Override
+	public int deletePost(int postId) {
+		
+		String statement = "postMapper.deletePost";
+	    int result = session.update(statement, postId);
+
+	    log.info("result=" + result);
+		return result;
+	}
+
 }
