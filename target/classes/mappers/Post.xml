@@ -35,4 +35,12 @@
 	   	]]>
 	</select>
 	
+	<update id="updatePost" parameterType="PostVO">
+		<![CDATA[
+		UPDATE POST
+		SET title = #{title}, content = #{content}
+	  	WHERE id = #{id}
+		]]>
+	</update>
+	
 </mapper>

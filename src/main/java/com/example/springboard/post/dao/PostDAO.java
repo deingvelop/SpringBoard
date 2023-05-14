@@ -12,4 +12,6 @@ public interface PostDAO {
 
 	PostVO showPost(int postId);
 
+	int updatePost(PostVO postVO);
+
 }

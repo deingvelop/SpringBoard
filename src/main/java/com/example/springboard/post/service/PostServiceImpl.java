@@ -38,5 +38,17 @@ public class PostServiceImpl implements PostService {
 		PostVO result = postDAO.showPost(postId);
 		return result;
 	}
+
+	@Override
+	public PostVO updatePost(PostVO postVO) {
+		
+		int result = postDAO.updatePost(postVO);
+		if (result != 1) {
+			throw new BusinessException(ErrorCode.INTERNAL_SERVER_ERROR);
+		}
+		
+		PostVO updatedPost = postDAO.showPost(postVO.getId());
+		return updatedPost;
+	}
 	
 }

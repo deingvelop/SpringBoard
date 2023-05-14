@@ -26,8 +26,7 @@ public enum ErrorCode {
 //  URL_NOT_FOUND("URL_NOT_FOUND", "URL을 찾을 수 없습니다.", 404),
 //  TYPE_MISMATCH("TYPE_MISMATCH", "입력된 enum값이 유효하지 않습니다.", 400),
 //  METHOD_NOT_ALLOWED("METHOD_NOT_ALLOWED", "유효하지 않은 HTTP method입니다.", 400),
-
-    private final String code;
+	private final String code;
     private final String message;
     private final int status;
 

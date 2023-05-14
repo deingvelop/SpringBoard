@@ -51,7 +51,7 @@
 	</head>
 <body>
 	<div class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-	    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="board">${loginMember.nickname}님 환영합니다.</a>
+	    <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6" href="/springboard/board">${loginMember.nickname}님 환영합니다.</a>
 	    <form class="d-flex" action="logout" method="POST">
 			<button class="btn btn-dark btn-sm" type="submit" onclick="return confirm('로그아웃 하시겠습니까?')">로그아웃</button>
 	    </form>
@@ -107,9 +107,9 @@
 						<p class="card-text">${post.content}</p>
 						<c:if test="${post.memberId eq loginMember.id}">
 							<div style="display: flex; flex-direction: row; align-items: center; justify-content: flex-end;">
-							  <button type="button" class="btn btn-outline-secondary btn-sm mx-2">
-							  	<a href="post/${post.id}/edit" style="text-decoration: none; color: inherit;">수정</a>
-						  	</button>	
+							  	<button type="button" class="btn btn-outline-secondary btn-sm mx-2">
+							  		<a href="/springboard/post/${post.id}/edit" style="text-decoration: none; color: inherit;">수정</a>
+					  			</button>
 							  <button type="button" class="btn btn-outline-danger btn-sm mx-2" onclick="deletePost('${post.id}')">삭제</button>	
 							</div>
 						</c:if>

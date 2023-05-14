@@ -34,5 +34,5 @@
 		    </form>   
 		    <p><a href="join" style="color: green;" onclick="alert('회원가입 페이지로 이동합니다.');">아직 계정이 없으십니까? 회원가입하기</a></p>
 		</div>
-	</body>
+	</body>                                                                
 </html>

@@ -1,5 +1,8 @@
 package com.example.springboard.member.service;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.springboard.exception.BusinessException;
@@ -15,7 +18,9 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
+	Logger log = LogManager.getLogger("case3");
 	
+//	@Autowired
 	private final MemberDAO memberDAO;
 	
 	@Override

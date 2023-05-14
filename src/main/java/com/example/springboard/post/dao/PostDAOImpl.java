@@ -49,4 +49,16 @@ public class PostDAOImpl implements PostDAO {
 	    return result;
 	}
 
+	@Override
+	public int updatePost(PostVO postVO) {
+		log.info("request=" + postVO);
+		
+		String statement = "postMapper.updatePost";
+	    int result = session.update(statement, postVO);
+
+	    log.info("result=" + result);
+		
+	    return result;
+	}
+
 }

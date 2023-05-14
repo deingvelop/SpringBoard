@@ -11,5 +11,7 @@ public interface PostService {
 	List<PostVO> loadPosts();
 
 	PostVO showPost(int postId);
+
+	PostVO updatePost(PostVO postVO);
 	
 }
