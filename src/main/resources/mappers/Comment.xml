@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="commentMapper">
+	
+	<resultMap type="CommentVO" id="commentResult">
+		<result column="id" property="id"/>
+		<result column="post_id" property="postId"/>
+		<result column="member_id" property="memberId"/>
+		<result column="member_nickname" property="memberNickname"/>
+		<result column="content" property="content"/>
+		<result column="comment_date" property="commentDate"/>
+	</resultMap>
+	
+	<insert id="insertComment" parameterType="CommentVO">
+		<![CDATA[
+		INSERT INTO COMMENT (id, post_id, member_id, member_nickname, "CONTENT", comment_date)
+	    VALUES (COMMENT_ID_SEQ.NEXTVAL, #{postId}, #{memberId}, #{memberNickname}, #{content}, sysdate)
+		]]>
+	</insert>
+	
+	<select id="findAllByPostId" parameterType="Integer" resultMap="commentResult">
+	    <![CDATA[
+	    SELECT * FROM COMMENT
+	    WHERE post_id = #{postId}
+	    ORDER BY id
+	   	]]>
+	</select>
+	
+	<select id="findById" parameterType="Integer" resultMap="commentResult">
+	    <![CDATA[
+	    SELECT * FROM COMMENT
+		WHERE id = #{id}
+	   	]]>
+	</select>
+	
+	<update id="updateComment" parameterType="CommentVO">
+		<![CDATA[
+		UPDATE COMMENT
+		SET content = #{content}
+	  	WHERE id = #{id}
+		]]>
+	</update>
+	
+	<delete id="deleteComment" parameterType="Integer">
+		<![CDATA[		
+		DELETE FROM COMMENT WHERE id = #{id}
+		]]>
+	</delete>
+	
+</mapper>

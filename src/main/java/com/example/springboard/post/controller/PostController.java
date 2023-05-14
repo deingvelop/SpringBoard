@@ -1,5 +1,6 @@
 package com.example.springboard.post.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.springboard.comment.service.CommentService;
+import com.example.springboard.comment.vo.CommentVO;
 import com.example.springboard.exception.BusinessException;
 import com.example.springboard.exception.ErrorCode;
 import com.example.springboard.member.vo.MemberVO;
@@ -31,23 +34,33 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class PostController {
 	
-//	@Autowired
 	private final PostService postService;
+	private final CommentService commentService;
 	
 	@ModelAttribute("post")
 	public PostVO createPostVO() {
 	    return new PostVO();
 	}
+	
+	@ModelAttribute("posts")
+	public List<PostVO> createPostVOs() {
+		return new ArrayList<PostVO>();
+	}
+	
+	@ModelAttribute("comments")
+	public List<CommentVO> createCommentVOs() {
+		return new ArrayList<CommentVO>();
+	}
 
 	@GetMapping("board")
-	public String showBoard(HttpSession session, @ModelAttribute("post") PostVO postVO) {
+	public String showBoard(HttpSession session, @ModelAttribute("posts") List<PostVO> posts) {
 		
 		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
 		if (loginMember == null) {
 			throw new BusinessException(ErrorCode.INVALID_LOGIN);
 		}
 		
-		List<PostVO> posts = postService.loadPosts();
+		posts = postService.loadPosts();
 		return "board";
 	}
 	
@@ -77,7 +90,7 @@ public class PostController {
 	}
 	
 	@GetMapping("post/{postId}")
-	public String goToPost(@PathVariable("postId") int postId, @ModelAttribute("post") PostVO postVO, HttpSession session) {
+	public String goToPost(@PathVariable("postId") int postId, @ModelAttribute("post") PostVO postVO, @ModelAttribute("comments") List<CommentVO> comments, HttpSession session) {
 		log.info("post/" + postId + "호출 완료");	
 		
 		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
@@ -141,6 +154,6 @@ public class PostController {
 		
 		postService.deletePost(postId);
 				
-		return "redirect:/board";
+		return "redirect:/board" + postId;
 	}
 }

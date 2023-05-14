@@ -45,6 +45,22 @@
 		        });
 		      }
 		    }
+		    
+		    function deleteComment(commentId) {
+			      if (confirm('댓글을 삭제하시겠습니까?')) {
+			        $.ajax({
+			          type: 'DELETE',
+			          url: '/springboard/post/'+ postId +'/comment/' + commentId,
+			          success: function(result) {
+			            alert('댓글이 삭제되었습니다.');
+			            window.location.reload();
+			          },
+			          error: function(err) {
+			            alert('댓글 삭제에 실패하였습니다.');
+			          }
+			        });
+			      }
+			    }
 		  </script>
 		
 	
@@ -136,22 +152,30 @@
 					<div class="card-footer">
 
 						<table class="table table-sm">
-							<thead>
-								<tr>
-									<th scope="col">작성자</th>
-									<th scope="col">내용</th>
-									<th scope="col">작성일</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="comment" items="${comments}">
-									<tr>
-										<td width='80px'>${comment.author}</td>
-										<td style="word-break: break-all">${comment.content}</td>
-										<td width='100px'>${comment.date}</td>
-									</tr>
-								</c:forEach>
-							</tbody>
+						    <thead>
+						        <tr>
+						            <th scope="col">작성자</th>
+						            <th scope="col">내용</th>
+						            <th scope="col">작성일</th>
+						            <th scope="col">수정</th>
+						            <th scope="col">삭제</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						        <c:forEach var="comment" items="${comments}">
+						            <tr>
+						                <td width='80px'>${comment.memberNickname}</td>
+						                <td style="word-break: break-all">${comment.content}</td>
+						                <td width='100px'>${comment.commentDate}</td>
+						                <td>
+						                    <a href="/springboard/post/${post.id}/comment/${comment.id}" class="btn btn-outline-secondary btn-sm">수정</a>
+						                </td>
+						                <td>
+						                    <button class="btn btn-outline-danger btn-sm" onclick="deleteComment(${comment.id})">삭제</button>
+						                </td>
+						            </tr>
+						        </c:forEach>
+						    </tbody>
 						</table>
 					</div>
 				</div>

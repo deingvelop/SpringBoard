@@ -19,6 +19,7 @@
 	<typeAliases>
         <package name="com.example.springboard.member.vo" />
         <package name="com.example.springboard.post.vo" />
+        <package name="com.example.springboard.comment.vo" />
     </typeAliases>
 	
 </configuration>

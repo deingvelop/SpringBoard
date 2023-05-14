@@ -65,7 +65,7 @@ public class PostDAOImpl implements PostDAO {
 	public int deletePost(int postId) {
 		
 		String statement = "postMapper.deletePost";
-	    int result = session.update(statement, postId);
+	    int result = session.delete(statement, postId);
 
 	    log.info("result=" + result);
 		return result;
