@@ -2,19 +2,26 @@ package com.example.springboard.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.springboard.exception.BusinessException;
+import com.example.springboard.exception.ErrorCode;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // 컨트롤러 메서드 실행 전에 실행되는 코드 작성
-        // 로그인 여부를 확인하고 필요한 작업 수행
-        // 예: 로그인되지 않은 경우 예외를 던지거나 로그인 페이지로 리다이렉트
+        HttpSession session = request.getSession();
+        Object loginMember = session.getAttribute("loginMember");
 
-        return true; // 계속 진행
+        if (loginMember != null) {
+            return true; // 세션에 loginMember 값이 있는 경우 인터셉터를 통과시킴
+        } else {
+            throw new BusinessException(ErrorCode.INVALID_LOGIN); // 세션에 loginMember 값이 없는 경우 BusinessException 발생
+        }
     }
 
     @Override

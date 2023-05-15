@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -60,7 +61,7 @@ public class PostController {
 			throw new BusinessException(ErrorCode.INVALID_LOGIN);
 		}
 		
-		posts = postService.loadPosts();
+		posts.addAll(postService.loadPosts());
 		return "board";
 	}
 	
@@ -75,7 +76,7 @@ public class PostController {
 	}
 	
 	@PostMapping("post/new")
-	public String createPost(PostVO requestVO, HttpSession session) {
+	public String createPost(@ModelAttribute("post") PostVO requestVO, HttpSession session) {
 		
 		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
 		if (loginMember == null) {
@@ -90,7 +91,7 @@ public class PostController {
 	}
 	
 	@GetMapping("post/{postId}")
-	public String goToPost(@PathVariable("postId") int postId, @ModelAttribute("post") PostVO postVO, @ModelAttribute("comments") List<CommentVO> comments, HttpSession session) {
+	public String goToPost(@PathVariable("postId") int postId, Model model, HttpSession session) {
 		log.info("post/" + postId + "호출 완료");	
 		
 		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
@@ -98,41 +99,29 @@ public class PostController {
 			throw new BusinessException(ErrorCode.INVALID_LOGIN);
 		}
 		
-		postVO = postService.showPost(postId);
+		PostVO postVO = postService.showPost(postId);
+		List<CommentVO> comments = commentService.loadPostComments(postId);
+		
+		model.addAttribute("post", postVO);
+		model.addAttribute("comments", comments);
+		
 		return "post";
 	}
 		
 	@GetMapping("post/{postId}/edit")
-	public String goToEditPostPage(@PathVariable("postId") int postId, @ModelAttribute("post") PostVO postVO, HttpSession session) {
+	public String goToEditPostPage(@PathVariable("postId") int postId, Model model, HttpSession session) {
 	    MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
 	    if (loginMember == null) {
 	        throw new BusinessException(ErrorCode.INVALID_LOGIN);
 	    }
-	    postVO = postService.showPost(postId);
+	    PostVO postVO = postService.showPost(postId);
+	    model.addAttribute("post", postVO);
 	    return "editpost";
 	}
 	
-	/*
-	 * @PutMapping(value = "post/{postId}/edit")
-	 * 
-	 * @ResponseBody public ResponseEntity<PostVO> editPost(@PathVariable("postId")
-	 * int postId, @RequestBody PostVO postVO, HttpSession session) {
-	 * log.info("수정하려고 들어온 데이터=" + postVO);
-	 * 
-	 * MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
-	 * log.warn(loginMember); if (loginMember == null) { throw new
-	 * BusinessException(ErrorCode.INVALID_LOGIN); }
-	 * 
-	 * postVO.setId(postId); PostVO result = postService.updatePost(postVO);
-	 * session.setAttribute("post", result); // 수정된 결과 객체를 세션에 저장
-	 * 
-	 * log.info("수정 controller 메서드 수행 완료");
-	 * 
-	 * return new ResponseEntity<PostVO>(result, HttpStatus.OK); }
-	 */
-
-	@PostMapping(value = "post/{postId}/edit")
-	public String editPost(@PathVariable("postId") int postId, @ModelAttribute("post") PostVO postVO, HttpSession session) {
+	@PutMapping(value = "post/{postId}/edit")
+	@ResponseBody
+	public ResponseEntity<PostVO> editPost(@PathVariable("postId") int postId, @ModelAttribute("post") PostVO postVO, HttpSession session) {
 		log.info("수정하려고 들어온 데이터=" + postVO);
 		
 		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
@@ -142,13 +131,14 @@ public class PostController {
 		}
 		
 		postVO.setId(postId);
-		postVO = postService.updatePost(postVO);
+		PostVO result = postService.updatePost(postVO);
+		session.setAttribute("post", result); // 수정된 결과 객체를 세션에 저장
 		
 		log.info("수정 controller 메서드 수행 완료");
 		
-		return "redirect:/post/" + postId;
+		return new ResponseEntity<PostVO>(result, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping(value = "post/{postId}")
 	public String deletePost(@PathVariable("postId") int postId, HttpSession session) {
 		

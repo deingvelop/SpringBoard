@@ -14,14 +14,14 @@
 	
 	<insert id="insertComment" parameterType="CommentVO">
 		<![CDATA[
-		INSERT INTO COMMENT (id, post_id, member_id, member_nickname, "CONTENT", comment_date)
+		INSERT INTO "COMMENT" (id, post_id, member_id, member_nickname, "CONTENT", comment_date)
 	    VALUES (COMMENT_ID_SEQ.NEXTVAL, #{postId}, #{memberId}, #{memberNickname}, #{content}, sysdate)
 		]]>
 	</insert>
 	
 	<select id="findAllByPostId" parameterType="Integer" resultMap="commentResult">
 	    <![CDATA[
-	    SELECT * FROM COMMENT
+	    SELECT * FROM "COMMENT"
 	    WHERE post_id = #{postId}
 	    ORDER BY id
 	   	]]>
@@ -29,14 +29,14 @@
 	
 	<select id="findById" parameterType="Integer" resultMap="commentResult">
 	    <![CDATA[
-	    SELECT * FROM COMMENT
+	    SELECT * FROM "COMMENT"
 		WHERE id = #{id}
 	   	]]>
 	</select>
 	
 	<update id="updateComment" parameterType="CommentVO">
 		<![CDATA[
-		UPDATE COMMENT
+		UPDATE "COMMENT"
 		SET content = #{content}
 	  	WHERE id = #{id}
 		]]>
@@ -44,7 +44,7 @@
 	
 	<delete id="deleteComment" parameterType="Integer">
 		<![CDATA[		
-		DELETE FROM COMMENT WHERE id = #{id}
+		DELETE FROM "COMMENT"  WHERE id = #{id}
 		]]>
 	</delete>
 	

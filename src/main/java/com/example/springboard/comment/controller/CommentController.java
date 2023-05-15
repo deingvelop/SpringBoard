@@ -27,70 +27,46 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 @RequestMapping("/post/{postId}")
 public class CommentController {
-	private final CommentService commentService;
-	
-	@ModelAttribute("comment")
-	public CommentVO createCommentVO() {
-	    return new CommentVO();
-	}
+    private final CommentService commentService;
+    
+    @ModelAttribute("comment")
+    public CommentVO createCommentVO() {
+        return new CommentVO();
+    }
+    
+    @PostMapping("comment")
+    public String createComment(@PathVariable("postId") int postId, @ModelAttribute("comment") CommentVO requestVO, HttpSession session) {
+        
+        MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
 
-//	@GetMapping("/comments")
-//	public String showPostComments(@PathVariable("postId") int postId, @ModelAttribute("comments") List<CommentVO> comments) {
-//		
-//		comments = commentService.loadPostComments(postId);
-//		return "redirect:/post/" + postId;
-//	}
-	
-	@PostMapping("comment")
-	public String createPost(@PathVariable("postId") int postId, CommentVO requestVO, HttpSession session) {
-		
-		MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
-
-		requestVO.setPostId(postId);
-		requestVO.setMemberId(loginMember.getId());
-		requestVO.setMemberNickname(loginMember.getNickname());
-	
-		commentService.createComment(requestVO);
-		
-		return "redirect:/post/" + postId;
-	}
-	
-	/*
-	 * @PutMapping(value = "post/{postId}/edit")
-	 * 
-	 * @ResponseBody public ResponseEntity<PostVO> editPost(@PathVariable("postId")
-	 * int postId, @RequestBody PostVO postVO, HttpSession session) {
-	 * log.info("수정하려고 들어온 데이터=" + postVO);
-	 * 
-	 * MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
-	 * log.warn(loginMember); if (loginMember == null) { throw new
-	 * BusinessException(ErrorCode.INVALID_LOGIN); }
-	 * 
-	 * postVO.setId(postId); PostVO result = postService.updatePost(postVO);
-	 * session.setAttribute("post", result); // 수정된 결과 객체를 세션에 저장
-	 * 
-	 * log.info("수정 controller 메서드 수행 완료");
-	 * 
-	 * return new ResponseEntity<PostVO>(result, HttpStatus.OK); }
-	 */
-
-	@PostMapping(value = "comment/{commentId}")
-	public String updateComment(@PathVariable("postId") int postId, @PathVariable("commentId") int commentId, @ModelAttribute("comment") CommentVO requestVO, HttpSession session) {
-		log.info("수정하려고 들어온 데이터=" + requestVO);
-		
-		requestVO.setId(commentId);
-		commentService.updateComment(requestVO);
-		
-		log.info("수정 controller 메서드 수행 완료");
-		
-		return "redirect:/post/" + postId;
-	}
-	
-	@DeleteMapping(value = "comment/{commentId}")
-	public String deleteComment(@PathVariable("postId") int postId, @PathVariable("commentId") int commentId, HttpSession session) {
-		
-		commentService.deleteComment(commentId);
-				
-		return "redirect:/post/" + postId;
-	}
+        requestVO.setPostId(postId);
+        requestVO.setMemberId(loginMember.getId());
+        requestVO.setMemberNickname(loginMember.getNickname());
+        
+        log.info("VO=" + requestVO);
+        
+        commentService.createComment(requestVO);
+        
+        return "redirect:/post/" + postId;
+    }
+    
+    @PostMapping(value = "comment/{commentId}")
+    public String updateComment(@PathVariable("postId") int postId, @PathVariable("commentId") int commentId, @ModelAttribute("comment") CommentVO requestVO, HttpSession session) {
+        log.info("수정하려고 들어온 comment 데이터=" + requestVO);
+        
+        requestVO.setId(commentId);
+        commentService.updateComment(requestVO);
+        
+        log.info("comment 수정 controller 메서드 수행 완료");
+        
+        return "redirect:/post/" + postId;
+    }
+    
+    @DeleteMapping(value = "comment/{commentId}")
+    public String deleteComment(@PathVariable("postId") int postId, @PathVariable("commentId") int commentId, HttpSession session) {
+        
+        commentService.deleteComment(commentId);
+                
+        return "redirect:/springboard/springboard/post/" + postId;
+        }
 }

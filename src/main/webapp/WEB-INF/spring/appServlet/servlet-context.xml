@@ -10,8 +10,8 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />	<!-- 이거 없으면 @RequestMapping 안 됨 -->
-
+	<annotation-driven />
+	
 	<default-servlet-handler />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
@@ -19,18 +19,27 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />	<!-- 폴더명 -->
-		<beans:property name="suffix" value=".jsp" />		<!-- 확장자 -->
-	</beans:bean>		<!-- 위의 두 속성 + controller가 보낸 문자열을 조합해서 어떤 파일을 열지 결정 -->
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
 	
-	<!-- 일반적으로 Servlet WebApplicationContext (DI Container)는
-		 Controller와 View 관련된 처리를 담당함 -->
+	<!-- 일반적으로 Servlet WebApplicationContext (DI Container)는 Controller와 View 관련된 처리를 담당함 -->
 	<context:component-scan base-package="com.example.springboard">
-<!-- 							use-default-filters= "false">	다 찾는 거 X -->
-<!-- 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>	@Controller 붙어있는 애만 찾기	 -->
+		<!-- use-default-filters="false" 다 찾는 거 X -->
+		<!-- <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/> @Controller 붙어있는 애만 찾기 -->
 	</context:component-scan>
 	
 	<resources mapping="/css/**" location="/WEB-INF/views/css/" />
-
 	
+ 	<interceptors>
+      <interceptor>
+         <mapping path="/**" />
+         <exclude-mapping path="/login" />
+         <exclude-mapping path="/join" />
+         <beans:bean class="com.example.springboard.interceptor.LoginInterceptor"/>
+      </interceptor>
+   </interceptors>
+   
 </beans:beans>
+
+   

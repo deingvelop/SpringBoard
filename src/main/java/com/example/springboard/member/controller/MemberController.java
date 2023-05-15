@@ -14,10 +14,12 @@ import com.example.springboard.member.vo.MemberRequestVO;
 import com.example.springboard.member.vo.MemberVO;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Controller
 @RequiredArgsConstructor
-@SessionAttributes("loginMember")
+//@SessionAttributes("loginMember")
 public class MemberController {
 
 	private final MemberService memberService;
@@ -30,6 +32,8 @@ public class MemberController {
 	@PostMapping("login")
 	public String login(MemberRequestVO requestVO, @ModelAttribute("loginMember") MemberVO loginMember, HttpSession session) {
 		loginMember = memberService.login(requestVO);
+	    session.setAttribute("loginMember", loginMember);
+	    log.info("session에 저장된 값=" + session.getAttribute("loginMember"));
 		return "redirect:/board";
 	}
 	
