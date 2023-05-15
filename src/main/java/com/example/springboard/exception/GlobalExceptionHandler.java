@@ -34,6 +34,7 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
 		} else {
 	    	// 다른 예외일 경우
 	        log.error("Unhandled exception occurred: ", e);
+	        e.printStackTrace();
 
 	        ModelAndView modelAndView = new ModelAndView("error");
 	        modelAndView.addObject("errorCode", response.getStatus());

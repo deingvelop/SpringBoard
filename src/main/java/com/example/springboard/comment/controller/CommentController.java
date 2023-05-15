@@ -1,13 +1,9 @@
 package com.example.springboard.comment.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.springboard.comment.service.CommentService;
 import com.example.springboard.comment.vo.CommentVO;
-import com.example.springboard.exception.BusinessException;
-import com.example.springboard.exception.ErrorCode;
 import com.example.springboard.member.vo.MemberVO;
 
 import lombok.RequiredArgsConstructor;
@@ -67,6 +61,6 @@ public class CommentController {
         
         commentService.deleteComment(commentId);
                 
-        return "redirect:/springboard/springboard/post/" + postId;
+        return "redirect:/springboard/post/" + postId;
         }
 }

@@ -82,7 +82,7 @@
 					<div class="btn-toolbar mb-2 mb-md-0"></div>
 				</div>
 				<!-- 			  <form> -->
-				<form method="post" action="post/${post.id}/edit">
+				<form method="post" action="/springboard/post/${post.id}/edit">
 					<div class="mb-3" style="margin: 0 auto">
 						<label for="postTitleInput" class="form-label">글 제목</label> <input
 							type="text" class="form-control" id="postTitleInput" name="title"
@@ -102,9 +102,11 @@
 					<div class="d-flex justify-content-center"
 						style="margin-right: 10px;">
 						<div class="btn-group" role="group">
+							<c:set var="postUrl" value="/springboard/post/${post.id}" />
 							<input class="btn btn-dark btn-sm" type="submit" value="저장"
-								style="margin-right: 5px;" onclick="editPost()"> <a
-								class="btn btn-danger btn-sm" href="/springboard/board">취소</a>
+								style="margin-right: 5px;" />
+							<a class="btn btn-danger btn-sm"
+								href="/springboard/post/{$post.id}">취소</a>
 						</div>
 					</div>
 				</form>

@@ -95,13 +95,22 @@ public class PostController {
 	    return "editpost";
 	}
 	
-	@PutMapping(value = "post/{postId}/edit")
-	@ResponseBody
-	public ResponseEntity<PostVO> editPost(@PathVariable("postId") int postId, @ModelAttribute("post") PostVO postVO, HttpSession session) {		
+//	@PutMapping(value = "post/{postId}/edit")
+//	@ResponseBody
+//	public ResponseEntity<PostVO> editPost(@PathVariable("postId") int postId, @ModelAttribute("post") PostVO postVO, HttpSession session) {		
+//		postVO.setId(postId);
+//		PostVO result = postService.updatePost(postVO);
+//		session.setAttribute("post", result); // 수정된 결과 객체를 세션에 저장		
+//		return new ResponseEntity<PostVO>(result, HttpStatus.OK);
+//	}
+	
+	@PostMapping(value = "post/{postId}/edit")
+	public String editPost(@PathVariable("postId") int postId, @ModelAttribute("post") PostVO postVO, HttpSession session) {		
+		log.info("수정할 데이터 =" + postVO);
 		postVO.setId(postId);
 		PostVO result = postService.updatePost(postVO);
 		session.setAttribute("post", result); // 수정된 결과 객체를 세션에 저장		
-		return new ResponseEntity<PostVO>(result, HttpStatus.OK);
+		return "redirect:/post/" + postId;
 	}
 
 	@DeleteMapping(value = "post/{postId}")
@@ -109,6 +118,6 @@ public class PostController {
 		
 		postService.deletePost(postId);
 				
-		return "redirect:/board" + postId;
+		return "redirect:/post" + postId;
 	}
 }
