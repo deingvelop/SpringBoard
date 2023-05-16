@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="preferenceMapper">
+	
+	<resultMap type="PreferenceVO" id="preferenceResult">
+		<result column="id" property="id"/>
+		<result column="post_id" property="postId"/>
+		<result column="member_id" property="memberId"/>
+		<result column="preference_type" property="type"/>
+	</resultMap>
+	
+	<insert id="insertLike" parameterType="PreferenceVO">
+		<![CDATA[
+		INSERT INTO PREFERENCE (id, post_id, member_id, preference_type)
+	    VALUES (PREFERENCE_ID_SEQ.NEXTVAL, #{postId}, #{memberId}, 'LIKE')
+		]]>
+	</insert>
+	
+	<insert id="insertDislike" parameterType="PreferenceVO">
+		<![CDATA[
+		INSERT INTO PREFERENCE (id, post_id, member_id, preference_type)
+	    VALUES (PREFERENCE_ID_SEQ.NEXTVAL, #{postId}, #{memberId}, 'DISLIKE')
+		]]>
+	</insert>
+	
+	<select id="findByPostIdAndMemberId" parameterType="PreferenceVO" resultMap="preferenceResult">
+	    <![CDATA[
+	    SELECT * FROM PREFERENCE
+	    WHERE post_id = #{postId} AND member_id = #{memberId}
+	   	]]>
+	</select>
+	
+	<delete id="deletePreference" parameterType="PreferenceVO">
+		<![CDATA[		
+		DELETE FROM PREFERENCE  WHERE id = #{id}
+		]]>
+	</delete>
+	
+</mapper>

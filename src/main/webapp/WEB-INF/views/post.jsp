@@ -1,8 +1,10 @@
+<%@page import="com.example.springboard.preference.vo.PreferenceVO.PreferenceType"%>
 <%@page import="com.example.springboard.member.vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page
-	import="java.util.*, com.example.springboard.post.vo.PostVO, com.example.springboard.member.vo.MemberVO"%>
+	import="java.util.*, com.example.springboard.post.vo.PostVO, com.example.springboard.member.vo.MemberVO, com.example.springboard.comment.vo.CommentVO, com.example.springboard.preference.vo.PreferenceVO"%>
+<%@ page import="com.example.springboard.preference.vo.PreferenceVO" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- 주요 로직 -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -76,6 +78,74 @@
 	            document.getElementById("editCommentContent").value = "";
 	            document.getElementById("editForm").style.display = "none";
 	        }
+	        
+	        function deleteLike() {
+        	  $.ajax({
+        	    type: "DELETE",
+        	    url: '/springboard/post/${post.id}/like',
+        	    success: function(response) {
+        	      // 성공적으로 처리된 경우 원하는 동작 수행
+        	      alert("취소 완료");
+				  location.reload();
+        	    },
+        	    error: function(xhr, textStatus, errorThrown) {
+        	      // 오류 발생 시 처리 로직
+        	      alert("취소 실패");
+				  location.reload();
+        	    }
+        	  });
+        	}
+	        
+	        function deleteDislike() {
+        	  $.ajax({
+        	    type: "DELETE",
+        	    url: '/springboard/post/${post.id}/dislike',
+        	    success: function(response) {
+        	      // 성공적으로 처리된 경우 원하는 동작 수행
+        	      alert("취소 완료");
+				  location.reload();
+        	    },
+        	    error: function(xhr, textStatus, errorThrown) {
+        	      // 오류 발생 시 처리 로직
+        	      alert("취소 실패");
+				  location.reload();
+        	    }
+        	  });
+        	}
+	        
+	        function postLike() {
+        	  $.ajax({
+        	    type: "POST",
+        	    url: '/springboard/post/${post.id}/like',
+        	    success: function(response) {
+        	      // 성공적으로 처리된 경우 원하는 동작 수행
+        	      alert("좋아요 완료");
+				  location.reload();
+        	    },
+        	    error: function(xhr, textStatus, errorThrown) {
+        	      // 오류 발생 시 처리 로직
+        	      alert("좋아요 실패");
+				  location.reload();
+        	    }
+        	  });
+        	}
+	        
+	        function postDislike() {
+        	  $.ajax({
+        	    type: "POST",
+        	    url: '/springboard/post/${post.id}/dislike',
+        	    success: function(response) {
+        	      // 성공적으로 처리된 경우 원하는 동작 수행
+        	      alert("싫어요 완료");
+				  location.reload();
+        	    },
+        	    error: function(xhr, textStatus, errorThrown) {
+        	      // 오류 발생 시 처리 로직
+        	      alert("싫어요 실패");
+				  location.reload();
+        	    }
+        	  });
+        	}
 		</script>
 		<style>
 		.edit-comment-textarea {
@@ -126,16 +196,24 @@
 						<div class="card-subtitle mb-2 text-muted">${post.memberNickname} &nbsp;|&nbsp; ${post.postDate}</div>
 						<div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
 							<div class="card-subtitle mb-2 text-muted" style="margin-right: 10px;">좋아요 ${post.likeCnt}</div>
-								<form name="likeForm" action="like?postId=${post.id}" method="POST">
-									<c:choose>
-										<c:when test="${post_liked == true}">
-											<input type="submit" onclick="javascript:document.likeForm.submit();" class="btn btn-dark btn-sm" value="좋아요 취소">
-										</c:when>
-										<c:when test="${post_liked == false}">
-											<input type="submit" onclick="javascript:document.likeForm.submit();" class="btn btn-outline-dark btn-sm" value="좋아요">
-										</c:when>
-									</c:choose>
-								</form>
+
+								<c:set var="likePreferenceType" value="<%= PreferenceVO.PreferenceType.LIKE %>" />							
+								<c:set var="dislikePreferenceType" value="<%= PreferenceVO.PreferenceType.DISLIKE %>" />							
+						
+								<c:choose>
+									<c:when test="${preference != null && preference.type == likePreferenceType}">
+										<input type="button" onclick="deleteLike();" class="btn btn-dark btn-sm" value="좋아요 취소">
+										<input type="button" onclick="postDislike();" class="btn btn-outline-dark btn-sm" value="싫어요">
+									</c:when>
+									<c:when test="${preference != null && preference.type == dislikePreferenceType}">
+										<input type="button" onclick="postLike();" class="btn btn-outline-dark btn-sm" value="좋아요">									
+										<input type="button" onclick="deleteDislike();" class="btn btn-dark btn-sm" value="싫어요 취소">
+									</c:when>
+									<c:when test="${preference == null}">
+										<input type="button" onclick="postLike();" class="btn btn-outline-dark btn-sm" value="좋아요">
+										<input type="button" onclick="postDislike();" class="btn btn-outline-dark btn-sm" value="싫어요">									
+									</c:when>
+								</c:choose>
 						</div>
 					</div>
 

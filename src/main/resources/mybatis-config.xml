@@ -20,6 +20,7 @@
         <package name="com.example.springboard.member.vo" />
         <package name="com.example.springboard.post.vo" />
         <package name="com.example.springboard.comment.vo" />
+        <package name="com.example.springboard.preference.vo" />
     </typeAliases>
 	
 </configuration>

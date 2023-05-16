@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.example.springboard.comment.service.CommentService;
 import com.example.springboard.comment.vo.CommentVO;
@@ -29,9 +30,7 @@ public class CommentController {
     }
     
     @PostMapping("comment")
-    public String createComment(@PathVariable("postId") int postId, @ModelAttribute("comment") CommentVO requestVO, HttpSession session) {
-        
-        MemberVO loginMember = (MemberVO) session.getAttribute("loginMember");
+    public String createComment(@PathVariable("postId") int postId, @ModelAttribute("comment") CommentVO requestVO, @SessionAttribute("loginMember") MemberVO loginMember) {
 
         requestVO.setPostId(postId);
         requestVO.setMemberId(loginMember.getId());
@@ -45,7 +44,7 @@ public class CommentController {
     }
     
     @PostMapping(value = "comment/{commentId}")
-    public String updateComment(@PathVariable("postId") int postId, @PathVariable("commentId") int commentId, @ModelAttribute("comment") CommentVO requestVO, HttpSession session) {
+    public String updateComment(@PathVariable("postId") int postId, @PathVariable("commentId") int commentId, @ModelAttribute("comment") CommentVO requestVO) {
         log.info("수정하려고 들어온 comment 데이터=" + requestVO);
         
         requestVO.setId(commentId);

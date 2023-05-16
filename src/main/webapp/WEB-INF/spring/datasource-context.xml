@@ -27,6 +27,7 @@
 				<value>classpath:mappers/Member.xml</value>
 				<value>classpath:mappers/Post.xml</value>
 				<value>classpath:mappers/Comment.xml</value>
+				<value>classpath:mappers/Preference.xml</value>
 				<!-- <value>classpath:mappers/Book.xml</value>
 				<value>classpath:mappers/Point.xml</value> -->
 			</list>

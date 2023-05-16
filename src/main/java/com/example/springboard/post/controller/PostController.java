@@ -27,6 +27,8 @@ import com.example.springboard.exception.ErrorCode;
 import com.example.springboard.member.vo.MemberVO;
 import com.example.springboard.post.service.PostService;
 import com.example.springboard.post.vo.PostVO;
+import com.example.springboard.preference.service.PreferenceService;
+import com.example.springboard.preference.vo.PreferenceVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -38,6 +40,7 @@ public class PostController {
 	
 	private final PostService postService;
 	private final CommentService commentService;
+	private final PreferenceService preferenceService;
 	
 	@ModelAttribute("post")
 	public PostVO createPostVO() {
@@ -52,6 +55,11 @@ public class PostController {
 	@ModelAttribute("comments")
 	public List<CommentVO> createCommentVOs() {
 		return new ArrayList<CommentVO>();
+	}
+	
+	@ModelAttribute("preference")
+	public PreferenceVO createPreference() {
+		return new PreferenceVO();
 	}
 
 	@GetMapping("board")
@@ -76,15 +84,20 @@ public class PostController {
 	}
 	
 	@GetMapping("post/{postId}")
-	public String goToPost(@PathVariable("postId") int postId, Model model) {
+	public String goToPost(@PathVariable("postId") int postId, @SessionAttribute("loginMember") MemberVO loginMember, Model model) {
 		log.info("post/" + postId + "호출 완료");
 		
 		PostVO postVO = postService.showPost(postId);
 		List<CommentVO> comments = commentService.loadPostComments(postId);
+		PreferenceVO preference = preferenceService.findByVO(new PreferenceVO(postId, loginMember.getId()));
+		
+		log.info(preference);
 		
 		model.addAttribute("post", postVO);
 		model.addAttribute("comments", comments);
+		model.addAttribute("preference", preference);
 		
+		log.info(model.getAttribute("preference"));
 		return "post";
 	}
 		
